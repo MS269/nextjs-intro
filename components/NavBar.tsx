@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 export default function NavBar() {
   const router = useRouter();
+
   return (
     <nav>
       <ul>
@@ -21,11 +22,6 @@ export default function NavBar() {
         </li>
       </ul>
       <style jsx>{`
-        a {
-          color: inherit;
-          text-decoration: none;
-        }
-
         .active {
           color: tomato;
         }
