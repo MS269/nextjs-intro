@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { NextRouter, useRouter } from "next/router";
 
 export default function NavBar() {
-  const router = useRouter();
+  const router: NextRouter = useRouter();
 
   return (
     <nav>
@@ -41,7 +41,7 @@ export default function NavBar() {
         }
 
         .active {
-          color: tomato;
+          opacity: 0.2;
         }
 
         nav div {

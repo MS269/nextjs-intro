@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { NextRouter, useRouter } from "next/router";
 import Seo from "../components/Seo";
 
 export default function Home({
@@ -9,14 +11,27 @@ export default function Home({
     original_title: string;
   }[];
 }) {
+  const router: NextRouter = useRouter();
+
+  const onClick = (id: number, title: string) =>
+    router.push(`/movies/${title}/${id}`);
+
   return (
     <div className="container">
       <Seo title="Home" />
 
       {results?.map((movie) => (
-        <div className="movie" key={movie.id}>
+        <div
+          className="movie"
+          key={movie.id}
+          onClick={() => onClick(movie.id, movie.original_title)}
+        >
           <img src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`} />
-          <h4>{movie.original_title}</h4>
+          <h4>
+            <Link href={`/movies/${movie.original_title}/${movie.id}`}>
+              <a>{movie.original_title}</a>
+            </Link>
+          </h4>
         </div>
       ))}
 
@@ -53,9 +68,15 @@ export default function Home({
 }
 
 export async function getServerSideProps() {
-  const { results } = await (
-    await fetch(`http://localhost:3000/api/movies`)
-  ).json();
+  const {
+    results,
+  }: {
+    results: {
+      id: number;
+      poster_path: string;
+      original_title: string;
+    }[];
+  } = await (await fetch(`http://localhost:3000/api/movies`)).json();
 
   return {
     props: {
